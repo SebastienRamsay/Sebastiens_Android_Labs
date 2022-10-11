@@ -2,4 +2,11 @@
     <string name="app_name">Sebastien\'s Android Labs</string>
     <string name='hello_message'>Hello World!</string>
     <string name="button_message">I am a button</string>
+    <string name="edit_message">I am an edit text</string>
+    <string name="hint_text">I am a hint</string>
+    <string name="checkbox_message">I am a checkbox</string>
+    <string name="radio_message1">I am a radio button #1</string>
+    <string name="radio_message2">I am a radio button #2</string>
+    <string name="radio_message3">I am a radio button #3</string>
+    <string name="switch_message">I am a switch</string>
 </resources>
