@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     //private ActivityMainBinding variableBinding;
     private MainViewModel model;
     private ActivityMainBinding variableBinding;
-    private int radioButtonNum = 0;
 
 
     @Override
@@ -32,93 +36,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        Switch spin = findViewById(R.id.spinSwitch);
 
         model = new ViewModelProvider(this).get(MainViewModel.class);
 
         variableBinding = ActivityMainBinding.inflate(getLayoutInflater());
         getLayoutInflater();
 
-        TextView myText = variableBinding.textviewId;
-        EditText myEditText = variableBinding.edittextId; //useless
-        Button myButton = variableBinding.buttonId;
 
 
 
-        setContentView(variableBinding.getRoot());
 
+            Switch switch1 = findViewById(R.id.spinSwitch);
+            ImageView flag = findViewById(R.id.imageView);
+            switch1.setOnCheckedChangeListener((Switch, isChecked) -> {
+                if (Switch.isChecked()){
+                    RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotate.setDuration(5000);
+                    rotate.setRepeatCount(Animation.INFINITE);
+                    rotate.setInterpolator(new LinearInterpolator());
+                    Toast.makeText(getApplicationContext(), "spin", Toast.LENGTH_SHORT).show();
+                    flag.startAnimation(rotate);
+                }else {
+                    flag.clearAnimation();
+                    Toast.makeText(getApplicationContext(), "stop spinning", Toast.LENGTH_SHORT).show();
 
+                }
 
-        model.checkbox.observe( this, selected -> {
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.radioButton1.observe( this, selected -> {
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.radioButton2.observe( this, selected -> {
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.radioButton3.observe( this, selected -> {
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.switch1.observe( this, selected -> {
-            variableBinding.switch1.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-
-        });
-            variableBinding.buttonId.setOnClickListener((button) -> {
-                model.textView.postValue("your edit text has: " + variableBinding.edittextId.getText().toString());
-                variableBinding.textviewId.setText(model.textView.getValue());
-            });
-
-            variableBinding.radioButton1.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.radioButton1.postValue(button.isChecked());
-                Toast.makeText(this, "Radio button #1 value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-            variableBinding.radioButton2.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.radioButton2.postValue(button.isChecked());
-                Toast.makeText(this, "Radio button #2 value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
             });
 
 
-            variableBinding.radioButton3.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.radioButton3.postValue(button.isChecked());
-                Toast.makeText(this, "Radio button #3 value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-            variableBinding.switch1.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.switch1.setValue(button.isChecked());
-                Toast.makeText(this, "Switch value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-            variableBinding.checkbox.setOnCheckedChangeListener ((button, isChecked) -> {
-                variableBinding.switch1.setChecked(isChecked);
-                Toast.makeText(this, "Checkbox value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
 
 
 
