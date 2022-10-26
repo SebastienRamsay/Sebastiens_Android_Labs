@@ -12,5 +12,12 @@
     <string name="Button3">Button 3</string>
     <string name="button1">Button 1</string>
     <string name="Button2">Button 2</string>
+    <string name="LoginButton">Login</string>
+    <string name="EmailTextView">Email Address</string>
+    <string name="EmailTextEdit">Type email here</string>
+    <string name="PasswordTextView">Password</string>
+    <string name="PasswordHint">Type password here</string>
+    <string name="changePictureButton">CHANGE PICTURE</string>
+    <string name="callNumberButton">CALL NUMBER</string>
 
 </resources>

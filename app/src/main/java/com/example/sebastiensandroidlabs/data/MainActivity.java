@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -39,36 +43,33 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
 
         com.example.sebastiensandroidlabs.databinding.ActivityMainBinding variableBinding = ActivityMainBinding.inflate(getLayoutInflater());
         getLayoutInflater();
 
 
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        EditText emailEditText = (EditText) findViewById(R.id.emailEditText);
 
 
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
 
-            Switch switch1 = findViewById(R.id.spinSwitch);
-            ImageView flag = findViewById(R.id.imageView);
-
-            switch1.setOnCheckedChangeListener((Switch, isChecked) -> {
-                if (Switch.isChecked()){
-                    RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                    rotate.setDuration(5000);
-                    rotate.setRepeatCount(Animation.INFINITE);
-                    rotate.setInterpolator(new LinearInterpolator());
-                    Toast.makeText(getApplicationContext(), "spin", Toast.LENGTH_SHORT).show();
-                    flag.startAnimation(rotate);
-                }else {
-                    flag.clearAnimation();
-                    Toast.makeText(getApplicationContext(), "stop spinning", Toast.LENGTH_SHORT).show();
-
-                }
-
-            });
+        String storedEmailAddress = prefs.getString("LoginName", "");
+        emailEditText.setText(storedEmailAddress);
 
 
+        loginButton.setOnClickListener( clk-> {
+            Intent nextPage = new Intent( MainActivity.this, SecondActivity.class);
+            nextPage.putExtra( "EmailAddress", emailEditText.getText().toString());
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("LoginName", emailEditText.getText().toString());
+            editor.apply();
+
+            startActivity(nextPage);
+        } );
 
 
 
