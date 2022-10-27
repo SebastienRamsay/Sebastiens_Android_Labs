@@ -6,99 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".data.MainActivity">
 
+    <TextView
+        android:id="@+id/passwordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="250dp"
+        android:text="@string/passwordMessage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
-        android:id="@+id/edittext_id"
+        android:id="@+id/passwordEditText"
         android:layout_width="278dp"
         android:layout_height="44dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/hint_text"
-        android:text="@string/edit_message"
-        app:layout_constraintEnd_toEndOf="@+id/textview_id"
+        android:layout_marginTop="8dp"
+        android:hint="@string/password_hint"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="@+id/passwordTextView"
         app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="@+id/textview_id"
-        app:layout_constraintTop_toBottomOf="@+id/textview_id" />
-
-    <TextView
-        android:id="@+id/textview_id"
-        android:layout_width="138dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/hello_message"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/checkbox_message"
-        app:layout_constraintEnd_toEndOf="@+id/switch1"
-        app:layout_constraintStart_toStartOf="@+id/switch1"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="@string/switch_message"
-        app:layout_constraintEnd_toEndOf="@+id/edittext_id"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="@+id/edittext_id"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_id"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        app:layout_constraintStart_toStartOf="@+id/passwordTextView"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
 
     <Button
-        android:id="@+id/button_id"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_message"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_id" />
+        android:layout_marginTop="8dp"
+        android:text="@string/loginMessage"
+        app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
+        app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="87dp"
-        android:layout_height="84dp"
-        android:layout_marginTop="52dp"
-        android:src="@drawable/app_icon"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-
-    <RadioButton
-        android:id="@+id/radioButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/radio_message1"
-        app:layout_constraintEnd_toEndOf="@+id/radioButton2"
-        app:layout_constraintStart_toStartOf="@+id/radioButton2"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton2" />
-
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/radio_message2"
-        app:layout_constraintEnd_toEndOf="@+id/radioButton3"
-        app:layout_constraintStart_toStartOf="@+id/radioButton3"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton3" />
-
-    <RadioButton
-        android:id="@+id/radioButton3"
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/radio_message3"
-        app:layout_constraintEnd_toEndOf="@+id/checkbox"
-        app:layout_constraintStart_toStartOf="@+id/checkbox"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,4 +9,7 @@
     <string name="radio_message2">I am a radio button #2</string>
     <string name="radio_message3">I am a radio button #3</string>
     <string name="switch_message">I am a switch</string>
+    <string name="password_hint">Type password here</string>
+    <string name="loginMessage">LOGIN</string>
+    <string name="passwordMessage">Type your password:</string>
 </resources>
