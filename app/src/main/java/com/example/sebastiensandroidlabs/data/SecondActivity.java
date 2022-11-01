@@ -4,10 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
@@ -40,12 +37,17 @@ public class SecondActivity extends AppCompatActivity {
 
     public static final int CAMERA_PERMISSION_REQUEST_CODE = 8675309;
 
+    private EditText phoneNumber = null;
+    private TextView welcomeText = null;
+    private Button callButton = null;
+    private Button changePictureButton = null;
+    private ImageView profileImage = null;
 
     @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-        EditText phoneNumber = (EditText) findViewById(R.id.editTextPhoneNumber);
+
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("phoneNumber", phoneNumber.getText().toString());
         editor.apply();
@@ -56,17 +58,36 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
+        phoneNumber = (EditText) findViewById(R.id.editTextPhoneNumber);
+        welcomeText = findViewById(R.id.welcomeText);
+        callButton = (Button) findViewById(R.id.callButton);
+        changePictureButton = findViewById(R.id.changePictureButton);
+        profileImage = findViewById(R.id.imageView);
+
         Intent fromPrevious = getIntent();
+        Intent call = new Intent(Intent.ACTION_DIAL);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String emailAddress = fromPrevious.getStringExtra("EmailAddress");
+        File picture = new File( getFilesDir(), "Picture.png");
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
 
 
-        TextView welcomeText = findViewById(R.id.welcomeText);
         welcomeText.setText("Welcome back " + emailAddress);
 
 
-        EditText phoneNumber = (EditText) findViewById(R.id.editTextPhoneNumber);
-        Intent call = new Intent(Intent.ACTION_DIAL);
-        Button callButton = (Button) findViewById(R.id.callButton);
+        if(picture.exists())
+        {
+            Bitmap theImage = BitmapFactory.decodeFile("picture.png");
+            profileImage.setImageBitmap(theImage);
+        }
+
+
+
+        String storedPhoneNumber = prefs.getString("phoneNumber", "");
+        phoneNumber.setText(storedPhoneNumber);
+
+
+
 
         callButton.setOnClickListener(clk -> {
             call.setData(Uri.parse("tel:" + phoneNumber.getText().toString()));
@@ -74,79 +95,6 @@ public class SecondActivity extends AppCompatActivity {
         });
 
 
-
-        Button changePictureButton = findViewById(R.id.changePictureButton);
-
-
-        changePictureButton.setOnClickListener(clk -> {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                    InvokeCamera();
-                }else {
-                    String[] permissionRequest = {Manifest.permission.CAMERA};
-                    requestPermissions( permissionRequest, CAMERA_PERMISSION_REQUEST_CODE);
-                }
-            }else {
-                Toast.makeText(this, "SDK_INT ERROR", Toast.LENGTH_LONG).show();
-            }
-
-        });
-
-        File file = new File( getFilesDir(), "Picture.png");
-
-        if(file.exists())
-        {
-            ImageView profileImage = findViewById(R.id.imageView);
-            Bitmap theImage = BitmapFactory.decodeFile("picture.png");
-            profileImage.setImageBitmap(theImage);
-        }
-
-        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
-
-        String storedPhoneNumber = prefs.getString("phoneNumber", "");
-        phoneNumber.setText(storedPhoneNumber);
-
-    }
-
-
-
-
-
-
-
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case CAMERA_PERMISSION_REQUEST_CODE:
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission is granted. Continue the action or workflow
-                    // in your app.
-                }  else {
-                    // Explain to the user that the feature is unavailable because
-                    // the features requires a permission that the user has denied.
-                    // At the same time, respect the user's decision. Don't link to
-                    // system settings in an effort to convince the user to change
-                    // their decision.
-                }
-                return;
-        }
-        // Other 'case' lines to check for other
-        // permissions this app might request.
-    }
-
-
-
-
-    private void InvokeCamera() {
-        ImageView profileImage = findViewById(R.id.imageView);
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         ActivityResultLauncher<Intent> cameraResult = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -157,12 +105,14 @@ public class SecondActivity extends AppCompatActivity {
 
 
                             Intent data = result.getData();
-                            Bitmap thumbnail = data.getParcelableExtra("data");
+                            Bitmap thumbnail = data.getParcelableExtra("Data");
                             profileImage.setImageBitmap(thumbnail);
 
                             FileOutputStream fOut = null;
 
-                            try { fOut = openFileOutput("Picture.png", Context.MODE_PRIVATE);
+                            try
+                            {
+                                fOut = openFileOutput("Picture.png", Context.MODE_PRIVATE);
 
                                 thumbnail.compress(Bitmap.CompressFormat.PNG, 100, fOut);
 
@@ -173,9 +123,11 @@ public class SecondActivity extends AppCompatActivity {
                             }
 
                             catch (FileNotFoundException e)
-                            { e.printStackTrace();
-
-                            } catch (IOException e) {
+                            {
+                                e.printStackTrace();
+                            }
+                            catch (IOException e)
+                            {
                                 e.printStackTrace();
                             }
                         }
@@ -183,10 +135,16 @@ public class SecondActivity extends AppCompatActivity {
                 }
         );
 
-        cameraResult.launch(cameraIntent);
+
+
+        changePictureButton.setOnClickListener(clk -> {
+            cameraResult.launch(cameraIntent);
+
+
+        });
+
+
+
     }
 
-
-
-
-}
+    }
