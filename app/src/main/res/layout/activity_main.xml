@@ -24,6 +24,7 @@
         android:layout_marginTop="8dp"
         android:hint="@string/password_hint"
         android:text=""
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/passwordTextView"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/passwordTextView"
@@ -38,6 +39,7 @@
         app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

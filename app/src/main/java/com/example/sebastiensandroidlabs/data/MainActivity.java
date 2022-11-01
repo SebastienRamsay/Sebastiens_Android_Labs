@@ -22,21 +22,24 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This holds the text at the centre of the screen
      */
-    private TextView passwordTextView = findViewById(R.id.passwordTextView);
+    private TextView passwordTextView = null;
     /**
      * this holds the password the user is supposed to enter
      */
-    private EditText passwordEditText = findViewById(R.id.passwordEditText);
+    private EditText passwordEditText = null;
     /**
      * this is the button the user clicks to check their password (login)
      */
-    private Button loginButton = findViewById(R.id.loginButton);
+    private Button loginButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        passwordTextView = findViewById(R.id.passwordTextView);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener( clk ->{
 
