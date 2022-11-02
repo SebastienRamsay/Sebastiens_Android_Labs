@@ -27,7 +27,6 @@ import com.example.sebastiensandroidlabs.ui.MainViewModel;
 import com.example.sebastiensandroidlabs.R;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
