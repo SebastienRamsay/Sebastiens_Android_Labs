@@ -49,42 +49,160 @@ public class MainActivityTest {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.passwordEditText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+
+
         appCompatEditText.perform(click());
 
-        ViewInteraction appCompatEditText2 = onView(
-                allOf(withId(R.id.passwordEditText),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatEditText2.perform(replaceText("1aA!"), closeSoftKeyboard());
 
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.loginButton), withText("LOGIN"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        appCompatEditText2.perform(replaceText("12345"), closeSoftKeyboard());
+
+
+        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
         materialButton.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.passwordTextView), withText("Your password meets the requirements"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        textView.check(matches(withText("Your password meets the requirements")));
+
+        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        textView.check(matches(withText("YOU SHALL NOT PASS!")));
+
     }
+
+    /**
+     * @author Sebastien Ramsay
+     *
+     * Tests the login requirements to make sure an upper case letter is required.
+     */
+    @Test
+    public void testFindMissingUpperCase() {
+
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+
+
+        appCompatEditText.perform(click());
+
+
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        appCompatEditText2.perform(replaceText("password123#$*"), closeSoftKeyboard());
+
+
+        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        materialButton.perform(click());
+
+
+        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        textView.check(matches(withText("YOU SHALL NOT PASS!")));
+
+    }
+
+    /**
+     * @author Sebastien Ramsay
+     *
+     * Tests the login requirements to make sure an lower case letter is required.
+     */
+    @Test
+    public void testFindMissingLowerCase() {
+
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+
+
+        appCompatEditText.perform(click());
+
+
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        appCompatEditText2.perform(replaceText("PASSWORD123#$*"), closeSoftKeyboard());
+
+
+        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        materialButton.perform(click());
+
+
+        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        textView.check(matches(withText("YOU SHALL NOT PASS!")));
+
+    }
+
+    /**
+     * @author Sebastien Ramsay
+     *
+     * Tests the login requirements to make sure a special character is required.
+     */
+    @Test
+    public void testFindMissingSpecialCharacter() {
+
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+
+
+        appCompatEditText.perform(click());
+
+
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        appCompatEditText2.perform(replaceText("Password123"), closeSoftKeyboard());
+
+
+        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        materialButton.perform(click());
+
+
+        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        textView.check(matches(withText("YOU SHALL NOT PASS!")));
+
+    }
+
+    /**
+     * @author Sebastien Ramsay
+     *
+     * Tests the login requirements to make sure a digit is required.
+     */
+    @Test
+    public void testFindMissingDigit() {
+
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+
+
+        appCompatEditText.perform(click());
+
+
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        appCompatEditText2.perform(replaceText("Password#$*"), closeSoftKeyboard());
+
+
+        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        materialButton.perform(click());
+
+
+        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        textView.check(matches(withText("YOU SHALL NOT PASS!")));
+
+    }
+
+    /**
+     * @author Sebastien Ramsay
+     *
+     * Tests the login requirements to make sure the test can be passed.
+     */
+    @Test
+    public void testPass() {
+
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+
+
+        appCompatEditText.perform(click());
+
+
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        appCompatEditText2.perform(replaceText("Password123#$*"), closeSoftKeyboard());
+
+
+        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        materialButton.perform(click());
+
+
+        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        textView.check(matches(withText("Your password meets the requirements")));
+
+    }
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
