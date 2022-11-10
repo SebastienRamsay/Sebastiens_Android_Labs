@@ -1,128 +1,132 @@
 package com.example.sebastiensandroidlabs.data;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.lifecycle.ViewModelProvider;
+import static android.widget.Toast.LENGTH_LONG;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sebastiensandroidlabs.databinding.ActivityMainBinding;
-import com.example.sebastiensandroidlabs.ui.MainViewModel;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sebastiensandroidlabs.R;
 
-
-
+/**
+ * @author Sebastien Ramsay
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity {
 
-//    private MainViewModel model;
-    //private ActivityMainBinding variableBinding;
-    private MainViewModel model;
-    private ActivityMainBinding variableBinding;
-    private int radioButtonNum = 0;
 
+    /**
+     * This holds the text at the centre of the screen
+     */
+    private TextView passwordTextView = null;
+    /**
+     * this holds the password the user is supposed to enter
+     */
+    private EditText passwordEditText = null;
+    /**
+     * this is the button the user clicks to check their password (login)
+     */
+    private Button loginButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        passwordTextView = findViewById(R.id.passwordTextView);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        loginButton = findViewById(R.id.loginButton);
 
+        loginButton.setOnClickListener( clk ->{
 
-        model = new ViewModelProvider(this).get(MainViewModel.class);
+            String password = passwordEditText.getText().toString();
 
-        variableBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        getLayoutInflater();
-
-        TextView myText = variableBinding.textviewId;
-        EditText myEditText = variableBinding.edittextId; //useless
-        Button myButton = variableBinding.buttonId;
-
-
-
-        setContentView(variableBinding.getRoot());
-
-
-
-        model.checkbox.observe( this, selected -> {
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
+            if (CheckPasswordComplexity(password)){
+                passwordTextView.setText("Your password meets the requirements");
+            }else{
+                passwordTextView.setText("YOU SHALL NOT PASS!");
+            }
         });
-        model.radioButton1.observe( this, selected -> {
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.radioButton2.observe( this, selected -> {
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.radioButton3.observe( this, selected -> {
-            variableBinding.radioButton3.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.switch1.setChecked(selected);
-
-        });
-        model.switch1.observe( this, selected -> {
-            variableBinding.switch1.setChecked(selected);
-            variableBinding.radioButton1.setChecked(selected);
-            variableBinding.radioButton2.setChecked(selected);
-            variableBinding.checkbox.setChecked(selected);
-            variableBinding.radioButton3.setChecked(selected);
-
-        });
-            variableBinding.buttonId.setOnClickListener((button) -> {
-                model.textView.postValue("your edit text has: " + variableBinding.edittextId.getText().toString());
-                variableBinding.textviewId.setText(model.textView.getValue());
-            });
-
-            variableBinding.radioButton1.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.radioButton1.postValue(button.isChecked());
-                Toast.makeText(this, "Radio button #1 value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-            variableBinding.radioButton2.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.radioButton2.postValue(button.isChecked());
-                Toast.makeText(this, "Radio button #2 value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-
-            variableBinding.radioButton3.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.radioButton3.postValue(button.isChecked());
-                Toast.makeText(this, "Radio button #3 value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-            variableBinding.switch1.setOnCheckedChangeListener ((button, isChecked) -> {
-                model.switch1.setValue(button.isChecked());
-                Toast.makeText(this, "Switch value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
-
-            variableBinding.checkbox.setOnCheckedChangeListener ((button, isChecked) -> {
-                variableBinding.switch1.setChecked(isChecked);
-                Toast.makeText(this, "Checkbox value is now: " + button.isChecked(), Toast.LENGTH_SHORT).show();
-            });
 
 
 
+    }
+
+    /**
+     *
+     * @param password The string being checked for complexity
+     * @return the password is either complex or not complex
+     */
+    private boolean CheckPasswordComplexity(String password) {
+        boolean complex = true;
+        char c;
+        int isUppercase = 0;
+        int isLowercase = 0;
+        int isNumber = 0;
+        int isSpecial = 0;
 
 
+        for (int i = 0; i < password.length(); i++){
+            c = password.charAt(i);
+            if (Character.isUpperCase(c)){
+                isUppercase++;
+            }else if (Character.isLowerCase(c)) {
+                isLowercase++;
+            }else if (Character.isDigit(c)){
+                isNumber++;
+            }else if (IsSpeciaCaracter(c)){
+                isSpecial++;
+            }
+        }
+        if (isLowercase == 0){
+            complex = false;
+            Toast.makeText(getApplicationContext(), "MISSING LOWERCASE", LENGTH_LONG).show();
+        }else if (isUppercase == 0){
+            complex = false;
+            Toast.makeText(getApplicationContext(), "MISSING UPPERCASE", LENGTH_LONG).show();
+        }else if (isNumber == 0){
+            complex = false;
+            Toast.makeText(getApplicationContext(), "MISSING NUMBER", LENGTH_LONG).show();
+        }else if (isSpecial == 0){
+            complex = false;
+            Toast.makeText(getApplicationContext(), "MISSING SPECIAL CHARACTER", LENGTH_LONG).show();
+        }
+
+        return complex;
+    }
+
+    /**
+     *
+     * @param c The character getting checked for special characters
+     * @return the character is either special or not special
+     */
+    private boolean IsSpeciaCaracter(char c) {
+
+        switch(c){
+            case '#':
+                return true;
+            case '?':
+                return true;
+            case '$':
+                return true;
+            case '%':
+                return true;
+            case '^':
+                return true;
+            case '&':
+                return true;
+            case '*':
+                return true;
+            case '!':
+                return true;
+            case '@':
+                return true;
+            default:
+                return false;
+        }
     }
 }
