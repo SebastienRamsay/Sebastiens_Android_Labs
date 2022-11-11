@@ -1,4 +1,4 @@
-package com.example.sebastiensandroidlabs.data;
+package com.example.sebastiensandroidlabs.ui;
 
 import static android.widget.Toast.LENGTH_LONG;
 

@@ -1,4 +1,4 @@
-package com.example.sebastiensandroidlabs.ui;
+package com.example.sebastiensandroidlabs.data;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
