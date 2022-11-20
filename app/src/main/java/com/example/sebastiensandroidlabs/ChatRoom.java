@@ -1,6 +1,7 @@
 package com.example.sebastiensandroidlabs;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -105,9 +106,9 @@ public class ChatRoom extends AppCompatActivity {
                 SentMessageBinding sentBinding = SentMessageBinding.inflate(getLayoutInflater());
                 RecievedMessageBinding receivedBinding = RecievedMessageBinding.inflate(getLayoutInflater());
                 if (viewType == 0){
-                    return new MyRowHolder(sentBinding.getRoot());
+                    return new MyRowHolder(sentBinding.getRoot(), messages, messageDAO, myAdapter);
                 }else if (viewType == 1){
-                    return new MyRowHolder(receivedBinding.getRoot());
+                    return new MyRowHolder(receivedBinding.getRoot(), messages, messageDAO, myAdapter);
                 }else{
                     return null;
                 }
@@ -146,9 +147,25 @@ class MyRowHolder extends RecyclerView.ViewHolder {
     TextView timeText;
 
 
-    public MyRowHolder(@NonNull View itemView) {
+    public MyRowHolder(@NonNull View itemView, ArrayList<ChatMessage> messages, ChatMessageDAO messageDAO, RecyclerView.Adapter myAdapter) {
 
         super(itemView);
+
+        itemView.setOnClickListener( click ->{
+            int position = getAbsoluteAdapterPosition();
+            AlertDialog.Builder builder = new AlertDialog.Builder( itemView.getContext() );
+            builder.setTitle("Question:")
+                    .setMessage("Do you want to delete the message: " + messageText.getText())
+                    .setNegativeButton("No", (dialog, which) -> {
+
+                    }).setPositiveButton("Yes", (dialog, which) -> {
+                        ChatMessage messageToDelete = messages.get(position);
+                        messageDAO.deleteMessage(messageToDelete);
+                        messages.remove(position);
+                        myAdapter.notifyItemRemoved(position);
+                    }).create().show();
+        });
+
         messageText = itemView.findViewById(R.id.messageText);
         timeText = itemView.findViewById(R.id.timeText);
     }
