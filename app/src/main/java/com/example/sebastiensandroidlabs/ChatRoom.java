@@ -20,6 +20,7 @@ import com.example.sebastiensandroidlabs.data.MessageDatabase;
 import com.example.sebastiensandroidlabs.databinding.ActivityChatRoomBinding;
 import com.example.sebastiensandroidlabs.databinding.RecievedMessageBinding;
 import com.example.sebastiensandroidlabs.databinding.SentMessageBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,12 +71,19 @@ public class ChatRoom extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
             String currentDateAndTime = sdf.format(new Date());
 
+            int position;
+            if (messages.size() == 0){
+                position = 0;
+            }else{
+                position = messages.get(messages.size() - 1).getId() + 1;
+            }
+
             ChatMessage message = new ChatMessage();
-            message.setChatMessage(messages.get(messages.size() - 1).getId() + 1, binding.textInput.getText().toString(), currentDateAndTime, true);
+            message.setChatMessage(position, binding.textInput.getText().toString(), currentDateAndTime, true);
             messages.add(message);
             messageDAO.instertMessage(message);
 
-            myAdapter.notifyItemInserted(messages.size() - 1);
+            myAdapter.notifyItemInserted(position);
             //notifyItemRemoved
             //notifyDatasetChanged
 
@@ -86,12 +94,19 @@ public class ChatRoom extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd-MMM-yyyy hh-mm-ss a");
             String currentDateAndTime = sdf.format(new Date());
 
+            int position;
+            if (messages.size() == 0){
+                position = 0;
+            }else{
+                position = messages.get(messages.size() - 1).getId() + 1;
+            }
+
             ChatMessage message = new ChatMessage();
-            message.setChatMessage(messages.get(messages.size() - 1).getId() + 1, binding.textInput.getText().toString(), currentDateAndTime, false);
+            message.setChatMessage(position, binding.textInput.getText().toString(), currentDateAndTime, false);
             messages.add(message);
             messageDAO.instertMessage(message);
 
-            myAdapter.notifyItemInserted(messages.size() - 1);
+            myAdapter.notifyItemInserted(position);
             //notifyItemRemoved
             //notifyDatasetChanged
 
@@ -159,10 +174,13 @@ class MyRowHolder extends RecyclerView.ViewHolder {
                     .setNegativeButton("No", (dialog, which) -> {
 
                     }).setPositiveButton("Yes", (dialog, which) -> {
+
                         ChatMessage messageToDelete = messages.get(position);
                         messageDAO.deleteMessage(messageToDelete);
                         messages.remove(position);
                         myAdapter.notifyItemRemoved(position);
+
+                        Snackbar.make(messageText, "You deleted message #" + position, Snackbar.LENGTH_LONG).show();
                     }).create().show();
         });
 
