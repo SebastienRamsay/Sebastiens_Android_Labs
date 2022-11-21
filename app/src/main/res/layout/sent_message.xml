@@ -13,9 +13,11 @@
 
         <TextView
             android:id="@+id/messageText"
-            android:layout_width="212dp"
+            android:layout_width="239dp"
             android:layout_height="match_parent"
+            android:paddingEnd="20dp"
             android:text="Message Text"
+            android:textAlignment="textEnd"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -23,17 +25,16 @@
 
         <TextView
             android:id="@+id/timeText"
-            android:layout_width="125dp"
-            android:layout_height="33dp"
+            android:layout_width="95dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
-            android:text="Time Text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messageText" />
+            android:text="Time Text" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -180,7 +180,13 @@ class MyRowHolder extends RecyclerView.ViewHolder {
                         messages.remove(position);
                         myAdapter.notifyItemRemoved(position);
 
-                        Snackbar.make(messageText, "You deleted message #" + position, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(messageText, "You deleted message #" + position, Snackbar.LENGTH_LONG).setAction("Undo", clck ->{
+
+                            messages.add(messageToDelete);
+                            myAdapter.notifyItemInserted(position);
+
+                        }).show();
+
                     }).create().show();
         });
 
