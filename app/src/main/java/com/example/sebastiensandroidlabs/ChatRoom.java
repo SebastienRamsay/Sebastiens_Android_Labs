@@ -3,6 +3,8 @@ package com.example.sebastiensandroidlabs;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +19,7 @@ import com.example.sebastiensandroidlabs.data.ChatMessage;
 import com.example.sebastiensandroidlabs.data.ChatMessageDAO;
 import com.example.sebastiensandroidlabs.data.ChatRoomViewModel;
 import com.example.sebastiensandroidlabs.data.MessageDatabase;
+import com.example.sebastiensandroidlabs.data.MessageDetailsFragment;
 import com.example.sebastiensandroidlabs.databinding.ActivityChatRoomBinding;
 import com.example.sebastiensandroidlabs.databinding.RecievedMessageBinding;
 import com.example.sebastiensandroidlabs.databinding.SentMessageBinding;
@@ -121,9 +124,9 @@ public class ChatRoom extends AppCompatActivity {
                 SentMessageBinding sentBinding = SentMessageBinding.inflate(getLayoutInflater());
                 RecievedMessageBinding receivedBinding = RecievedMessageBinding.inflate(getLayoutInflater());
                 if (viewType == 0){
-                    return new MyRowHolder(sentBinding.getRoot(), messages, messageDAO, myAdapter);
+                    return new MyRowHolder(sentBinding.getRoot(), chatModel, messageDAO, myAdapter);
                 }else if (viewType == 1){
-                    return new MyRowHolder(receivedBinding.getRoot(), messages, messageDAO, myAdapter);
+                    return new MyRowHolder(receivedBinding.getRoot(), chatModel, messageDAO, myAdapter);
                 }else{
                     return null;
                 }
@@ -152,6 +155,17 @@ public class ChatRoom extends AppCompatActivity {
             }
         });
 
+        chatModel.selectedMessage.observe(this, (newMessageValue) -> {
+
+
+            MessageDetailsFragment chatFragment = new MessageDetailsFragment( newMessageValue );
+            getSupportFragmentManager()
+                    .beginTransaction()
+                        .add(R.id.fragmentLocation, chatFragment)
+                            .commit();
+
+        });
+
 
     }
 }
@@ -162,32 +176,40 @@ class MyRowHolder extends RecyclerView.ViewHolder {
     TextView timeText;
 
 
-    public MyRowHolder(@NonNull View itemView, ArrayList<ChatMessage> messages, ChatMessageDAO messageDAO, RecyclerView.Adapter myAdapter) {
+    public MyRowHolder(@NonNull View itemView, ChatRoomViewModel chatModel, ChatMessageDAO messageDAO, RecyclerView.Adapter myAdapter) {
 
         super(itemView);
 
         itemView.setOnClickListener( click ->{
+
             int position = getAbsoluteAdapterPosition();
-            AlertDialog.Builder builder = new AlertDialog.Builder( itemView.getContext() );
-            builder.setTitle("Question:")
-                    .setMessage("Do you want to delete the message: " + messageText.getText())
-                    .setNegativeButton("No", (dialog, which) -> {
+            ChatMessage selected = chatModel.messages.getValue().get(position);
 
-                    }).setPositiveButton("Yes", (dialog, which) -> {
 
-                        ChatMessage messageToDelete = messages.get(position);
-                        messageDAO.deleteMessage(messageToDelete);
-                        messages.remove(position);
-                        myAdapter.notifyItemRemoved(position);
 
-                        Snackbar.make(messageText, "You deleted message #" + position, Snackbar.LENGTH_LONG).setAction("Undo", clck ->{
+            chatModel.selectedMessage.postValue(selected);
 
-                            messages.add(messageToDelete);
-                            myAdapter.notifyItemInserted(position);
 
-                        }).show();
-
-                    }).create().show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder( itemView.getContext() );
+//            builder.setTitle("Question:")
+//                    .setMessage("Do you want to delete the message: " + messageText.getText())
+//                    .setNegativeButton("No", (dialog, which) -> {
+//
+//                    }).setPositiveButton("Yes", (dialog, which) -> {
+//
+//                        ChatMessage messageToDelete = messages.get(position);
+//                        messageDAO.deleteMessage(messageToDelete);
+//                        messages.remove(position);
+//                        myAdapter.notifyItemRemoved(position);
+//
+//                        Snackbar.make(messageText, "You deleted message #" + position, Snackbar.LENGTH_LONG).setAction("Undo", clck ->{
+//
+//                            messages.add(messageToDelete);
+//                            myAdapter.notifyItemInserted(position);
+//
+//                        }).show();
+//
+//                    }).create().show();
         });
 
         messageText = itemView.findViewById(R.id.messageText);
