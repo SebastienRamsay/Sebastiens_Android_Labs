@@ -8,6 +8,7 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="10.1_WXGA_Tablet_API_27" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_5_API_27" value="120" />
                   <entry key="Tests" value="360" />
