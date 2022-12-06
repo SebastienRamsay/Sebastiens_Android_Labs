@@ -3,4 +3,9 @@
     <string name="app_name">Sebastien\'s Android Labs</string>
     <string name="hello_message">Bonjour toute le monde!</string>
     <string name="button_message">Je suis un bouton</string>
+    <string name="databaseID">ID de la base de données:</string>
+    <string name="message">Message:</string>
+    <string name="timeSent">Heure d\'envoi:</string>
+    <string name="sentOrReceived">Envoyé ou Reçu:</string>
+    <string name="timeRecieved">Heure de Réception:</string>
 </resources>

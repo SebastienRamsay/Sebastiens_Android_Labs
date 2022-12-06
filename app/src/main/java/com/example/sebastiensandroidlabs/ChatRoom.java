@@ -159,10 +159,15 @@ public class ChatRoom extends AppCompatActivity {
 
 
             MessageDetailsFragment chatFragment = new MessageDetailsFragment( newMessageValue );
+
             getSupportFragmentManager()
                     .beginTransaction()
-                        .add(R.id.fragmentLocation, chatFragment)
-                            .commit();
+                    .add(
+                            R.id.fragmentLocation,
+                            chatFragment
+                    )
+                    .addToBackStack("")
+                    .commit();
 
         });
 

@@ -12,4 +12,9 @@
     <string name="password_hint">Type password here</string>
     <string name="loginMessage">LOGIN</string>
     <string name="passwordMessage">Type your password:</string>
+    <string name="databaseID">Database ID:</string>
+    <string name="message">Message:</string>
+    <string name="timeSent">Time Sent:</string>
+    <string name="sentOrReceived">Sent or Received:</string>
+    <string name="timeRecieved">Time Received:</string>
 </resources>
