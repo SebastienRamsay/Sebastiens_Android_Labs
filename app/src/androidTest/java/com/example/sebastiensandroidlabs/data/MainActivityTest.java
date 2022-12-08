@@ -6,9 +6,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
@@ -49,21 +47,21 @@ public class MainActivityTest {
             e.printStackTrace();
         }
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.cityEditText)));
 
 
         appCompatEditText.perform(click());
 
 
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.cityEditText)));
         appCompatEditText2.perform(replaceText("12345"), closeSoftKeyboard());
 
 
-        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        ViewInteraction materialButton = onView(allOf(withId(R.id.getForecastButton)));
         materialButton.perform(click());
 
 
-        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        ViewInteraction textView = onView(allOf(withId(R.id.instructionsTextView)));
         textView.check(matches(withText("YOU SHALL NOT PASS!")));
 
     }
@@ -76,21 +74,21 @@ public class MainActivityTest {
     @Test
     public void testFindMissingUpperCase() {
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.cityEditText)));
 
 
         appCompatEditText.perform(click());
 
 
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.cityEditText)));
         appCompatEditText2.perform(replaceText("password123#$*"), closeSoftKeyboard());
 
 
-        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        ViewInteraction materialButton = onView(allOf(withId(R.id.getForecastButton)));
         materialButton.perform(click());
 
 
-        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        ViewInteraction textView = onView(allOf(withId(R.id.instructionsTextView)));
         textView.check(matches(withText("YOU SHALL NOT PASS!")));
 
     }
@@ -103,21 +101,21 @@ public class MainActivityTest {
     @Test
     public void testFindMissingLowerCase() {
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.cityEditText)));
 
 
         appCompatEditText.perform(click());
 
 
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.cityEditText)));
         appCompatEditText2.perform(replaceText("PASSWORD123#$*"), closeSoftKeyboard());
 
 
-        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        ViewInteraction materialButton = onView(allOf(withId(R.id.getForecastButton)));
         materialButton.perform(click());
 
 
-        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        ViewInteraction textView = onView(allOf(withId(R.id.instructionsTextView)));
         textView.check(matches(withText("YOU SHALL NOT PASS!")));
 
     }
@@ -130,21 +128,21 @@ public class MainActivityTest {
     @Test
     public void testFindMissingSpecialCharacter() {
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.cityEditText)));
 
 
         appCompatEditText.perform(click());
 
 
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.cityEditText)));
         appCompatEditText2.perform(replaceText("Password123"), closeSoftKeyboard());
 
 
-        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        ViewInteraction materialButton = onView(allOf(withId(R.id.getForecastButton)));
         materialButton.perform(click());
 
 
-        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        ViewInteraction textView = onView(allOf(withId(R.id.instructionsTextView)));
         textView.check(matches(withText("YOU SHALL NOT PASS!")));
 
     }
@@ -157,21 +155,21 @@ public class MainActivityTest {
     @Test
     public void testFindMissingDigit() {
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.cityEditText)));
 
 
         appCompatEditText.perform(click());
 
 
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.cityEditText)));
         appCompatEditText2.perform(replaceText("Password#$*"), closeSoftKeyboard());
 
 
-        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        ViewInteraction materialButton = onView(allOf(withId(R.id.getForecastButton)));
         materialButton.perform(click());
 
 
-        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        ViewInteraction textView = onView(allOf(withId(R.id.instructionsTextView)));
         textView.check(matches(withText("YOU SHALL NOT PASS!")));
 
     }
@@ -184,21 +182,21 @@ public class MainActivityTest {
     @Test
     public void testPass() {
 
-        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText = onView(allOf(withId(R.id.cityEditText)));
 
 
         appCompatEditText.perform(click());
 
 
-        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.passwordEditText)));
+        ViewInteraction appCompatEditText2 = onView(allOf(withId(R.id.cityEditText)));
         appCompatEditText2.perform(replaceText("Password123#$*"), closeSoftKeyboard());
 
 
-        ViewInteraction materialButton = onView(allOf(withId(R.id.loginButton)));
+        ViewInteraction materialButton = onView(allOf(withId(R.id.getForecastButton)));
         materialButton.perform(click());
 
 
-        ViewInteraction textView = onView(allOf(withId(R.id.passwordTextView)));
+        ViewInteraction textView = onView(allOf(withId(R.id.instructionsTextView)));
         textView.check(matches(withText("Your password meets the requirements")));
 
     }
