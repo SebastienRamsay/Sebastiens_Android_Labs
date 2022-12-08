@@ -17,4 +17,7 @@
     <string name="timeSent">Time Sent:</string>
     <string name="sentOrReceived">Sent or Received:</string>
     <string name="timeRecieved">Time Received:</string>
+    <string name="delete_message">Delete Message</string>
+    <string name="receive">RECEIVE</string>
+    <string name="send">SEND</string>
 </resources>

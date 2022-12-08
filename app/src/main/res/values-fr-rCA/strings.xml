@@ -8,4 +8,6 @@
     <string name="timeSent">Heure d\'envoi:</string>
     <string name="sentOrReceived">Envoyé ou Reçu:</string>
     <string name="timeRecieved">Heure de Réception:</string>
+    <string name="delete_message">Delete Message</string>
+    <string name="send">SEND</string>
 </resources>

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.sebastiensandroidlabs.R;
@@ -14,13 +12,13 @@ import com.example.sebastiensandroidlabs.databinding.DetailsLayoutBinding;
 
 public class MessageDetailsFragment extends Fragment {
 
-    ChatMessage selected;
+    ChatMessage message;
     DetailsLayoutBinding binding;
     String sentOrRecieved;
     int id;
 
     public MessageDetailsFragment (ChatMessage message){
-        selected = message;
+        this.message = message;
     }
 
 
@@ -29,9 +27,9 @@ public class MessageDetailsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         binding = DetailsLayoutBinding.inflate(inflater);
-        id = selected.id;
+        id = message.id;
 
-        if (selected.sentOrRecieved){
+        if (message.sentOrRecieved){
             sentOrRecieved = "Sent";
             binding.timeText2.setText(getResources().getString(R.string.timeSent));
         }else {
@@ -39,8 +37,12 @@ public class MessageDetailsFragment extends Fragment {
             binding.timeText2.setText(getResources().getString(R.string.timeRecieved));
         }
 
-        binding.messageText.setText(selected.getMessage());
-        binding.timeText.setText(selected.timeSent);
+
+
+
+
+        binding.messageText.setText(message.getMessage());
+        binding.timeText.setText(message.timeSent);
         binding.sentOrRecievedText.setText(sentOrRecieved);
         binding.databaseIdText.setText(String.valueOf(id));
 
@@ -50,5 +52,6 @@ public class MessageDetailsFragment extends Fragment {
 
         return binding.getRoot();
     }
+
 
 }

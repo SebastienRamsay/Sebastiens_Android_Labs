@@ -18,4 +18,7 @@ public interface ChatMessageDAO {
 
     @Delete
     void deleteMessage(ChatMessage message);
+
+    @Query("DELETE FROM ChatMessage WHERE id > -1")
+    void deleteAllMessages();
 }
